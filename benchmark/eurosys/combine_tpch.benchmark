@@ -1,0 +1,24 @@
+# name: ${FILE_PATH}
+# description: ${DESCRIPTION}
+# group: [ingestion]
+
+name tpch_combine
+group eurosys
+
+require parquet
+
+require tpch
+
+storage transient
+
+load
+create table customer as select * from read_parquet('${BENCHMARK_DIR}/tpch_parquet/customer.parquet');
+create table lineitem as select * from read_parquet('${BENCHMARK_DIR}/tpch_parquet/lineitem.parquet');
+create table nation as select * from read_parquet('${BENCHMARK_DIR}/tpch_parquet/nation.parquet');
+create table orders as select * from read_parquet('${BENCHMARK_DIR}/tpch_parquet/orders.parquet');
+create table part as select * from read_parquet('${BENCHMARK_DIR}/tpch_parquet/part.parquet');
+create table partsupp as select * from read_parquet('${BENCHMARK_DIR}/tpch_parquet/partsupp.parquet');
+create table region as select * from read_parquet('${BENCHMARK_DIR}/tpch_parquet/region.parquet');
+create table supplier as select * from read_parquet('${BENCHMARK_DIR}/tpch_parquet/supplier.parquet');
+
+run extension/tpch/dbgen/queries/combine.sql
